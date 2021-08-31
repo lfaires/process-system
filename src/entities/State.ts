@@ -7,8 +7,11 @@ export default class State {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 2 })
+  @Column({ length: 50 })
   name: string;
+
+  @Column({ length: 2 })
+  initial: string;
 
   @OneToMany(() => Client, client => client.state)
   client: Client[];
