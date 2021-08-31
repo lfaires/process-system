@@ -1,7 +1,8 @@
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import Client from './Client';
 import Process from './Process';
 
+@Entity('states')
 export default class State {
   @PrimaryGeneratedColumn()
   id: number;
