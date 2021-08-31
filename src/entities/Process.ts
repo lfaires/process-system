@@ -20,6 +20,9 @@ export default class Process {
   @CreateDateColumn({ type: 'timestamp' })
   createdDate: Date;
 
+  @Column({ default: true })
+  status: boolean;
+
   @Column()
   initialId: number;
 
