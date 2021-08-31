@@ -23,6 +23,9 @@ export default class Process {
   @Column({ default: true })
   status: boolean;
 
+  @Column('integer')
+  value: number;
+
   @Column()
   initialId: number;
 
