@@ -1,5 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import Client from './Client';
+import Initial from './Initial';
 import State from './State';
 
 @Entity('process')
@@ -7,14 +14,14 @@ export default class Process {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 5 })
   number: string;
 
-  @Column()
-  initials: string;
+  @CreateDateColumn({ type: 'timestamp' })
+  createdDate: Date;
 
   @Column()
-  createdDate: string;
+  initialId: number;
 
   @Column()
   stateId: number;
@@ -22,9 +29,16 @@ export default class Process {
   @Column()
   clientId: number;
 
-  @OneToMany(() => State, state => state.process)
+  @ManyToOne(() => Initial, initial => initial.process)
+  initial: Initial;
+
+  @ManyToOne(() => State, state => state.process)
   state: State;
 
-  @OneToMany(() => Client, client => client.state)
+  @ManyToOne(() => Client, client => client.process)
   client: Client;
+
+  name() {
+    return this.number + this.initial + this.state;
+  }
 }

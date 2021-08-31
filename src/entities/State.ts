@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Client from './Client';
 import Process from './Process';
 
@@ -7,12 +7,12 @@ export default class State {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 2 })
   name: string;
 
-  @ManyToOne(() => Client, client => client.state)
-  client: Client;
+  @OneToMany(() => Client, client => client.state)
+  client: Client[];
 
-  @ManyToOne(() => Process, process => process.state)
-  process: Process;
+  @OneToMany(() => Process, process => process.state)
+  process: Process[];
 }
