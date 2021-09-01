@@ -1,5 +1,4 @@
-import { getRepository, MoreThan } from 'typeorm';
-import Client from '../entities/Client';
+import { getRepository } from 'typeorm';
 import Process from '../entities/Process';
 
 export async function getAllProcess() {
