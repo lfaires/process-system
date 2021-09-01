@@ -10,7 +10,7 @@ if (
 export default async function connect() {
   const connectionManager = await getConnectionManager();
   const connection = connectionManager.create({
-    name: 'dafault',
+    name: 'default',
     type: 'postgres',
     url: process.env.DATABASE_URL,
     entities: [
