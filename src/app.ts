@@ -15,7 +15,7 @@ app.use(express.json());
 app.get('/process', processController.getAllProcess);
 app.get('/states', statesController.getAllStates);
 app.get('/clients', clientsController.getAllClients);
-//app.post('/clients', clientsController.insertNewClient);
+app.post('/clients', clientsController.insertNewClient);
 app.get('/initials', initialsController.getAllinitials);
 
 export async function init() {
