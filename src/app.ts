@@ -6,6 +6,7 @@ import connectDatabase from './database';
 import * as processController from './controllers/processController';
 import * as statesController from './controllers/statesController';
 import * as clientsController from './controllers/clientsController';
+import * as initialsController from './controllers/initialsController';
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ app.get('/process', processController.getAllProcess);
 app.get('/states', statesController.getAllStates);
 app.get('/clients', clientsController.getAllClients);
 //app.post('/clients', clientsController.insertNewClient);
+app.get('/initials', initialsController.getAllinitials);
 
 export async function init() {
   await connectDatabase();
