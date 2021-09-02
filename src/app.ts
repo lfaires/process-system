@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/process', processController.getAllProcess);
+app.post('/process', processController.insertNewProcess);
 app.get('/states', statesController.getAllStates);
 app.get('/clients', clientsController.getAllClients);
 app.post('/clients', clientsController.insertNewClient);
