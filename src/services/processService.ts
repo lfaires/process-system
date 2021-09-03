@@ -1,13 +1,21 @@
-import { getRepository } from 'typeorm';
+import { getRepository, MoreThan } from 'typeorm';
 import Process from '../entities/Process';
 import State from '../entities/State';
 import Initial from '../entities/Initial';
 
-export async function getAllProcess() {
+export async function getAllProcess(params: {
+  status?: string;
+  clientId?: string;
+  stateId?: string;
+  initialId?: string;
+}) {
   const repository = await getRepository(Process);
+
   const result = await repository.find({
-    where: {},
+    where: params,
     relations: ['client', 'state', 'initial', 'client.state'],
+    take: 10,
+    order: { value: 'DESC' },
   });
 
   const allProcess = result.map(p => {
@@ -17,7 +25,7 @@ export async function getAllProcess() {
       createdDate: p.createdDate,
       state: p.state.name,
       status: p.status,
-      value: p.value,
+      value: p.value / 100,
       clientId: p.client.id,
       client: p.client.name,
       cnpj: p.client.cnpj,
@@ -63,4 +71,26 @@ export async function insertNewProcess(
   });
 
   return newProcess.number + initial[0].name + state[0].initial;
+}
+
+export async function checkParamsToFilter(
+  status: string,
+  clientId: string,
+  stateId: string,
+  initialId: string,
+  value: string,
+) {
+  const filter = {
+    status,
+    clientId,
+    stateId,
+    initialId,
+  };
+
+  if (!status || status === 'all') delete filter.status;
+  if (!clientId || clientId === 'all') delete filter.clientId;
+  if (!stateId || stateId === 'all') delete filter.stateId;
+  if (!initialId || initialId === 'all') delete filter.initialId;
+
+  return filter;
 }

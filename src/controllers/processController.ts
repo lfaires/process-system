@@ -4,8 +4,25 @@ import * as processService from '../services/processService';
 
 import { processSchema } from '../schemas/processSchema';
 
+interface Query {
+  status?: string;
+  stateId?: string;
+  initialId?: string;
+  clientId?: string;
+  value?: string;
+}
+
 export async function getAllProcess(req: Request, res: Response) {
-  const allProcess = await processService.getAllProcess();
+  const { status, stateId, initialId, clientId, value } = req.query as Query;
+
+  const params = await processService.checkParamsToFilter(
+    status,
+    clientId,
+    stateId,
+    initialId,
+    value,
+  );
+  const allProcess = await processService.getAllProcess(params);
 
   res.send(allProcess);
 }
